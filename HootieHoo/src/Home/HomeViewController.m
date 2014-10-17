@@ -1,24 +1,24 @@
 //
-//  ViewController.m
+//  HomeViewController.m
 //  HootieHoo
 //
-//  Created by Phil Scarfi on 10/17/14.
+//  Created by Alex Koshy on 10/17/14.
 //  Copyright (c) 2014 Pioneer Mobile Application. All rights reserved.
 //
 
-
-#import "ViewController.h"
+#import "HomeViewController.h"
 #import "AppDelegate.h"
 #import "Task.h"
+#import "AddTaskViewController.h"
 
-@interface ViewController ()
+@interface HomeViewController ()
 
 @property (nonatomic, strong) NSMutableArray *oldTasks;
 @property (nonatomic, strong) NSMutableArray *futureTasks;
 
 @end
 
-@implementation ViewController
+@implementation HomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,10 +27,30 @@
     self.oldTasks = [NSMutableArray new];
     self.futureTasks = [NSMutableArray new];
     
+    [self configureTableView];
+    [self createBarButtonItems];
     [self loadData];
 }
 
 #pragma mark - Initialization
+
+- (void)configureTableView {
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+}
+- (void)createBarButtonItems {
+    
+    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                         target:self
+                                                                         action:@selector(addButtonPressed)];
+    self.addButton = add;
+    self.navigationItem.rightBarButtonItem = self.addButton;
+}
+- (void)addButtonPressed {
+    AddTaskViewController *vc = [[AddTaskViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
 
 #pragma mark - Task Management
 
@@ -61,7 +81,6 @@
             [self.futureTasks addObject:task];
         }
     }
-    [self.tableView reloadData];
 }
 - (void)saveTaskWithName:(NSString *)name andDuration:(NSNumber *)duration {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -91,12 +110,11 @@
     else {
         [futureTask setValue:[NSNumber numberWithInt:1] forKey:@"number"];
     }
-
+    
     //Save
     NSError *error;
     [context save:&error];
-  
-    [self loadData];
+    
 }
 - (void)finishTask:(Task *)task {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -108,11 +126,11 @@
     
     [futureTask setValue:[NSNumber numberWithBool:YES] forKey:@"completed"];
     
+    
+    
     //Save
     NSError *error;
     [context save:&error];
-    
-    [self loadData];
 }
 
 #pragma mark - Transition
@@ -123,20 +141,7 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    switch (section) {
-        case 0:
-            return [self.oldTasks count];
-            break;
-        case 1:
-            //return 5;
-            return [self.futureTasks count];
-            break;
-            
-        default:
-            break;
-    }
-    return 0;
+    return 10;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -188,7 +193,7 @@
     return YES;
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
-                                            forRowAtIndexPath:(NSIndexPath *)indexPath {
+forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Override to support editing the table view.
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -196,7 +201,7 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     

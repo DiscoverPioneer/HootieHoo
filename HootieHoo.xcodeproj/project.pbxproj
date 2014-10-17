@@ -11,11 +11,14 @@
 		0986B09E19F0CD190060E159 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B09D19F0CD190060E159 /* AppDelegate.m */; };
 		0986B0A119F0CD190060E159 /* HootieHoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0986B09F19F0CD190060E159 /* HootieHoo.xcdatamodeld */; };
 		0986B0A419F0CD190060E159 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B0A319F0CD190060E159 /* ViewController.m */; };
-		0986B0A719F0CD190060E159 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0986B0A519F0CD190060E159 /* Main.storyboard */; };
 		0986B0A919F0CD190060E159 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0986B0A819F0CD190060E159 /* Images.xcassets */; };
 		0986B0AC19F0CD190060E159 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0986B0AA19F0CD190060E159 /* LaunchScreen.xib */; };
 		0986B0B819F0CD190060E159 /* HootieHooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B0B719F0CD190060E159 /* HootieHooTests.m */; };
-		0986B0C319F0D8670060E159 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B0C219F0D8670060E159 /* Task.m */; };
+		FAD7D22119F18A7E00E662B7 /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7D21C19F18A7E00E662B7 /* AddTaskViewController.m */; };
+		FAD7D22219F18A7E00E662B7 /* AddTaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD7D21D19F18A7E00E662B7 /* AddTaskViewController.xib */; };
+		FAD7D22319F18A7E00E662B7 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7D21F19F18A7E00E662B7 /* HomeViewController.m */; };
+		FAD7D22419F18A7E00E662B7 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD7D22019F18A7E00E662B7 /* HomeViewController.xib */; };
+		FAF6C1E319F1819800EE2697 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = FAF6C1E019F1819800EE2697 /* Task.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,14 +40,19 @@
 		0986B0A019F0CD190060E159 /* HootieHoo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HootieHoo.xcdatamodel; sourceTree = "<group>"; };
 		0986B0A219F0CD190060E159 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		0986B0A319F0CD190060E159 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		0986B0A619F0CD190060E159 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0986B0A819F0CD190060E159 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0986B0AB19F0CD190060E159 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0986B0B119F0CD190060E159 /* HootieHooTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HootieHooTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0986B0B619F0CD190060E159 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0986B0B719F0CD190060E159 /* HootieHooTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HootieHooTests.m; sourceTree = "<group>"; };
-		0986B0C119F0D8670060E159 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
-		0986B0C219F0D8670060E159 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		FAD7D21B19F18A7E00E662B7 /* AddTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTaskViewController.h; sourceTree = "<group>"; };
+		FAD7D21C19F18A7E00E662B7 /* AddTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTaskViewController.m; sourceTree = "<group>"; };
+		FAD7D21D19F18A7E00E662B7 /* AddTaskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTaskViewController.xib; sourceTree = "<group>"; };
+		FAD7D21E19F18A7E00E662B7 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		FAD7D21F19F18A7E00E662B7 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		FAD7D22019F18A7E00E662B7 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		FAF6C1DF19F1819800EE2697 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
+		FAF6C1E019F1819800EE2697 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,12 +98,10 @@
 				0986B09D19F0CD190060E159 /* AppDelegate.m */,
 				0986B0A219F0CD190060E159 /* ViewController.h */,
 				0986B0A319F0CD190060E159 /* ViewController.m */,
-				0986B0A519F0CD190060E159 /* Main.storyboard */,
+				FAF6C1D919F1819800EE2697 /* src */,
 				0986B0A819F0CD190060E159 /* Images.xcassets */,
 				0986B0AA19F0CD190060E159 /* LaunchScreen.xib */,
 				0986B09F19F0CD190060E159 /* HootieHoo.xcdatamodeld */,
-				0986B0C119F0D8670060E159 /* Task.h */,
-				0986B0C219F0D8670060E159 /* Task.m */,
 				0986B09819F0CD190060E159 /* Supporting Files */,
 			);
 			path = HootieHoo;
@@ -125,6 +131,45 @@
 				0986B0B619F0CD190060E159 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FAD7D21919F18A7E00E662B7 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FAD7D21E19F18A7E00E662B7 /* HomeViewController.h */,
+				FAD7D21F19F18A7E00E662B7 /* HomeViewController.m */,
+				FAD7D22019F18A7E00E662B7 /* HomeViewController.xib */,
+				FAD7D21A19F18A7E00E662B7 /* AddTask */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FAD7D21A19F18A7E00E662B7 /* AddTask */ = {
+			isa = PBXGroup;
+			children = (
+				FAD7D21B19F18A7E00E662B7 /* AddTaskViewController.h */,
+				FAD7D21C19F18A7E00E662B7 /* AddTaskViewController.m */,
+				FAD7D21D19F18A7E00E662B7 /* AddTaskViewController.xib */,
+			);
+			path = AddTask;
+			sourceTree = "<group>";
+		};
+		FAF6C1D919F1819800EE2697 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FAF6C1DE19F1819800EE2697 /* Objects */,
+				FAD7D21919F18A7E00E662B7 /* Home */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		FAF6C1DE19F1819800EE2697 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				FAF6C1DF19F1819800EE2697 /* Task.h */,
+				FAF6C1E019F1819800EE2697 /* Task.m */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,9 +252,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0986B0A719F0CD190060E159 /* Main.storyboard in Resources */,
 				0986B0AC19F0CD190060E159 /* LaunchScreen.xib in Resources */,
+				FAD7D22219F18A7E00E662B7 /* AddTaskViewController.xib in Resources */,
 				0986B0A919F0CD190060E159 /* Images.xcassets in Resources */,
+				FAD7D22419F18A7E00E662B7 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,10 +273,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0986B0C319F0D8670060E159 /* Task.m in Sources */,
 				0986B09E19F0CD190060E159 /* AppDelegate.m in Sources */,
+				FAD7D22119F18A7E00E662B7 /* AddTaskViewController.m in Sources */,
 				0986B09B19F0CD190060E159 /* main.m in Sources */,
 				0986B0A419F0CD190060E159 /* ViewController.m in Sources */,
+				FAF6C1E319F1819800EE2697 /* Task.m in Sources */,
+				FAD7D22319F18A7E00E662B7 /* HomeViewController.m in Sources */,
 				0986B0A119F0CD190060E159 /* HootieHoo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,14 +302,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0986B0A519F0CD190060E159 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0986B0A619F0CD190060E159 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		0986B0AA19F0CD190060E159 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -422,6 +462,7 @@
 				0986B0BD19F0CD190060E159 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0986B0BE19F0CD190060E159 /* Build configuration list for PBXNativeTarget "HootieHooTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +471,7 @@
 				0986B0C019F0CD190060E159 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
