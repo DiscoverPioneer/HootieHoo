@@ -57,6 +57,7 @@
             [self.futureTasks addObject:task];
         }
     }
+    [self.tableView reloadData];
 }
 
 - (void)saveTaskWithName:(NSString *)name andDuration:(NSNumber *)duration {
@@ -92,6 +93,7 @@
     NSError *error;
     [context save:&error];
   
+    [self loadData];
 }
 
 - (void)finishTask:(Task *)task {
@@ -104,11 +106,11 @@
     
     [futureTask setValue:[NSNumber numberWithBool:YES] forKey:@"completed"];
     
-    
-    
     //Save
     NSError *error;
     [context save:&error];
+    
+    [self loadData];
 }
 
 #pragma mark - Table view data source
@@ -125,8 +127,8 @@
             return [self.oldTasks count];
             break;
         case 1:
-            return 5;
-            //return [self.futureTasks count];
+            //return 5;
+            return [self.futureTasks count];
             break;
             
         default:
