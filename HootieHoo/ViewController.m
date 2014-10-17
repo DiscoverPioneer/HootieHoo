@@ -9,6 +9,7 @@
 
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import "Task.h"
 
 @interface ViewController ()
 
@@ -30,47 +31,107 @@
 }
 
 - (void)loadData {
-//    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-//    
-//    NSManagedObjectContext *context = [appDelegate managedObjectContext];
-//    
-//    NSEntityDescription *entityDesc =
-//    [NSEntityDescription entityForName:@"Contacts"
-//                inManagedObjectContext:context];
-//    
-//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-//    [request setEntity:entityDesc];
-//    
-//    NSPredicate *pred =
-//    [NSPredicate predicateWithFormat:@"(name = %@)",
-//     _name.text];
-//    [request setPredicate:pred];
-//    NSManagedObject *matches = nil;
-//    
-//    NSError *error;
-//    NSArray *objects = [context executeFetchRequest:request
-//                                              error:&error];
-//    
-//    if ([objects count] == 0) {
-//        _status.text = @"No matches";
-//    } else {
-//        matches = objects[0];
-//        _address.text = [matches valueForKey:@"address"];
-//        _phone.text = [matches valueForKey:@"phone"];
-//        _status.text = [NSString stringWithFormat:
-//                        @"%lu matches found", (unsigned long)[objects count]];
-//    }
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    NSEntityDescription *entityDesc =
+    [NSEntityDescription entityForName:@"Task"
+                inManagedObjectContext:context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDesc];
+    
+    NSError *error;
+    NSArray *objects = [context executeFetchRequest:request
+                                              error:&error];
+    
+    //Iterate through array, and seperate into old and future tasks
+    for (NSManagedObject *object in objects) {
+        Task *task = (Task *)object;
+        BOOL completed = [task.completed boolValue];
+        if (completed) {
+            [self.oldTasks addObject:task];
+        }
+        else {
+            [self.futureTasks addObject:task];
+        }
+    }
+}
+
+- (void)saveTaskWithName:(NSString *)name andDuration:(NSNumber *)duration {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    NSManagedObject *futureTask;
+    futureTask = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
+                                               inManagedObjectContext:context];
+    
+    [futureTask setValue:name forKey:@"name"];
+    [futureTask setValue:duration forKey:@"duration"];
+    [futureTask setValue:[NSNumber numberWithBool:NO] forKey:@"completed"];
+    
+    Task *lastTask;
+    if ([self.futureTasks count] != 0) {
+        lastTask = [self.futureTasks lastObject];
+    }
+    else if ([self.oldTasks count] != 0) {
+        lastTask = [self.oldTasks lastObject];
+    }
+    
+    if (lastTask) {
+        int number = [lastTask.number intValue];
+        number++;
+        [futureTask setValue:[NSNumber numberWithInt:number] forKey:@"number"];
+    }
+    else {
+        [futureTask setValue:[NSNumber numberWithInt:1] forKey:@"number"];
+    }
+
+    //Save
+    NSError *error;
+    [context save:&error];
+  
+}
+
+- (void)finishTask:(Task *)task {
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    NSManagedObject *futureTask;
+    futureTask = [NSEntityDescription insertNewObjectForEntityForName:@"Task"
+                                               inManagedObjectContext:context];
+    
+    [futureTask setValue:[NSNumber numberWithBool:YES] forKey:@"completed"];
+    
+    
+    
+    //Save
+    NSError *error;
+    [context save:&error];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
+    switch (section) {
+        case 0:
+            return [self.oldTasks count];
+            break;
+        case 1:
+            return 5;
+            //return [self.futureTasks count];
+            break;
+            
+        default:
+            break;
+    }
     return 0;
 }
 

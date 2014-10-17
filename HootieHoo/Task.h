@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * completed;
+@property (nonatomic, retain) NSNumber * number;
 
 @end

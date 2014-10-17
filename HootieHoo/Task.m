@@ -14,5 +14,6 @@
 @dynamic duration;
 @dynamic name;
 @dynamic completed;
+@dynamic number;
 
 @end
