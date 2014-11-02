@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Task.h"
 #import "AddTaskViewController.h"
+#import "Date.h"
 
 @interface HomeViewController ()
 
@@ -21,6 +22,7 @@
 @implementation HomeViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -30,6 +32,9 @@
     [self configureTableView];
     [self createBarButtonItems];
     [self loadData];
+    
+    Date *today = [Date today];
+    self.title = [NSString stringWithFormat:@"%@ %i", today.monthShortName, today.day];
 }
 
 #pragma mark - Initialization
@@ -161,7 +166,7 @@
     return 30;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"";
+    return @"Tasks";
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
@@ -172,8 +177,8 @@
     // Edit label properties to span view width
     UILabel *label = [[UILabel alloc] init];
     label.frame = CGRectMake(0, 0, self.tableView.bounds.size.width, 30);
-    label.backgroundColor = [UIColor colorWithWhite:( 20/255.0) alpha:0.75];
-    label.textColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    label.backgroundColor = [UIColor whiteColor];
+    label.textColor = [UIColor colorWithWhite:0.0 alpha:0.8];
     label.font = [UIFont fontWithName:@"Arial-BoldMT" size:12];
     label.text = [sectionTitle uppercaseString];
     
