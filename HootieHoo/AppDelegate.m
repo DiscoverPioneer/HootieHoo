@@ -25,7 +25,10 @@
     
     // Set global appearance settings
     //[[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-    //[[UINavigationBar appearance] setTranslucent:YES];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:( 82/255.0)
+                                                               green:(163/255.0)
+                                                                blue:(134/255.0) alpha:1.0]];
     
     // Set main vc inside nav controller
     HomeViewController *vc = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
