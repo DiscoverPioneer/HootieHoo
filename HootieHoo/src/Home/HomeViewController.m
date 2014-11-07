@@ -79,7 +79,6 @@ NSInteger const kSTATE_PLAY = 2;
     [self configureTableView];
     [self configureTopView];
     [self createBarButtonItems];
-    [self loadData];
     [self registerNibs];
     
     Date *today = [Date today];
@@ -87,6 +86,10 @@ NSInteger const kSTATE_PLAY = 2;
     
     self.selectedTaskIndex = -1;
     self.playButton.tag = kSTATE_PLAY;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self loadData];
 }
 
 #pragma mark - Initialization
@@ -147,6 +150,10 @@ NSInteger const kSTATE_PLAY = 2;
     NSArray *objects = [context executeFetchRequest:request
                                               error:&error];
     
+    //First Clear Arrays
+    [self.oldTasks removeAllObjects];
+    [self.futureTasks removeAllObjects];
+    
     // Iterate through array, and seperate into old and future tasks
     for (NSManagedObject *object in objects) {
         Task *task = (Task *)object;
@@ -158,7 +165,9 @@ NSInteger const kSTATE_PLAY = 2;
             [self.futureTasks addObject:task];
         }
     }
+    [self.tableView reloadData];
 }
+
 - (void)saveTaskWithName:(NSString *)name andDuration:(NSNumber *)duration {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
@@ -213,11 +222,17 @@ NSInteger const kSTATE_PLAY = 2;
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // TODO: Remove sample data
-    return taskHours.count;
+    //return taskHours.count;
+    if (section == 0) {
+        return [self.oldTasks count];
+    }
+    else {
+        return [self.futureTasks count];
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -226,11 +241,16 @@ NSInteger const kSTATE_PLAY = 2;
     if (!cell) {
         cell = [[TaskCell alloc] init];
     }
-    
-    // TODO: Remove sample data
-    cell.nameLabel.text = taskNames[indexPath.row];
-    cell.timestampLabel.text = taskHours[indexPath.row];
-    
+    Task *task;
+    if (indexPath.section == 0) {
+        task = [self.oldTasks objectAtIndex:indexPath.row];
+    }
+    else {
+        task = [self.futureTasks objectAtIndex:indexPath.row];
+    }
+    cell.task = task;
+    cell.nameLabel.text = task.name;
+        
     if (indexPath.row == self.selectedTaskIndex) {
         [self selectCell:cell];
     } else {
@@ -244,10 +264,12 @@ NSInteger const kSTATE_PLAY = 2;
 #pragma mark - Table View Section
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    return section == 0 ? [self.oldTasks count] : [self.futureTasks count];
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Tasks";
+    
+    return section == 0 ? @"Old Tasks" : @"New Tasks";
+
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     

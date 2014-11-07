@@ -7,6 +7,8 @@
 //
 
 #import "AddTaskViewController.h"
+#import "Task.h"
+#import "AppDelegate.h"
 
 @interface AddTaskViewController ()
 
@@ -43,7 +45,25 @@
 }
 - (void)doneButtonPressed {
     
+    [self saveTask];
+    
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)saveTask {
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    Task *task = [NSEntityDescription insertNewObjectForEntityForName:@"Task" inManagedObjectContext:context];
+    task.name = self.nameTextField.text;
+    task.completed = [NSNumber numberWithBool:NO];
+    task.number = [NSNumber numberWithInt:-1];
+    task.duration = [NSNumber numberWithDouble:self.durationPicker.countDownDuration];
+    NSError *error;
+    [context save:&error];
+    if (error) {
+        //Display alert
+        NSLog(@"%@",[error localizedDescription]);
+    }
 }
 
 @end
