@@ -11,16 +11,63 @@
 #import "Task.h"
 #import "AddTaskViewController.h"
 #import "Date.h"
+#import "TaskCell.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface HomeViewController ()
+NSInteger const kSTATE_PAUSE = 1;
+NSInteger const kSTATE_PLAY = 2;
+
+@interface HomeViewController () {
+    UIColor *lightGreenColor;
+    UIColor *selectedTextColor;
+    
+    // TODO: Remove sample data
+    NSMutableArray *taskNames;
+    NSMutableArray *taskHours;
+}
 
 @property (nonatomic, strong) NSMutableArray *oldTasks;
 @property (nonatomic, strong) NSMutableArray *futureTasks;
+
+@property (nonatomic, strong) TaskCell *selectedTaskCell;
+@property (nonatomic, assign) NSInteger selectedTaskIndex;
 
 @end
 
 @implementation HomeViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        
+        lightGreenColor = [UIColor colorWithRed:(104/255.0)
+                                            green:(224/255.0)
+                                             blue:(192/255.0) alpha:1.0];
+        selectedTextColor = [UIColor colorWithRed:( 82/255.0)
+                                            green:(163/255.0)
+                                             blue:(134/255.0) alpha:1.0];
+        
+        // TODO: Remove sample data
+        taskNames = [NSMutableArray new];
+        taskHours = [NSMutableArray new];
+        for (int i = 1; i <= 15; i++) {
+            NSString *str = [NSString stringWithFormat:@"Task %i", i];
+            [taskNames addObject:str];
+            
+            NSInteger num = (i % 3) + 1;
+            NSString *str2;
+            if (num == 1) {
+                str2 = [NSString stringWithFormat:@"%ihr", num];
+            } else {
+                str2 = [NSString stringWithFormat:@"%ihrs", num];
+            }
+            [taskHours addObject:str2];
+        }
+    }
+    return self;
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -30,11 +77,19 @@
     self.futureTasks = [NSMutableArray new];
     
     [self configureTableView];
+    [self configureTopView];
     [self createBarButtonItems];
-    [self loadData];
+    [self registerNibs];
     
     Date *today = [Date today];
     self.title = [NSString stringWithFormat:@"%@ %i", today.monthShortName, today.day];
+    
+    self.selectedTaskIndex = -1;
+    self.playButton.tag = kSTATE_PLAY;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self loadData];
 }
 
 #pragma mark - Initialization
@@ -42,19 +97,39 @@
 - (void)configureTableView {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.rowHeight = 60;
+}
+- (void)configureTopView {
+    [self.detailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.detailButton.backgroundColor = lightGreenColor;
+    self.detailButton.layer.cornerRadius = 5;
 }
 - (void)createBarButtonItems {
     
-    UIBarButtonItem *add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                         target:self
-                                                                         action:@selector(addButtonPressed)];
-    self.addButton = add;
+    self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                   target:self
+                                                                   action:@selector(addButtonPressed)];
+    self.editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                    target:self
+                                                                    action:@selector(editButtonPressed)];
+    self.cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                      target:self
+                                                                      action:@selector(cancelButtonPressed)];
+    self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                    target:self
+                                                                    action:@selector(doneButtonPressed)];
+    
     self.navigationItem.rightBarButtonItem = self.addButton;
+    self.navigationItem.leftBarButtonItem = self.editButton;
 }
-- (void)addButtonPressed {
-    AddTaskViewController *vc = [[AddTaskViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nav animated:YES completion:nil];
+- (void)registerNibs {
+    
+    // Register custom cell
+    UINib *nib = [UINib nibWithNibName:@"TaskCell" bundle:nil];
+    [[self tableView] registerNib:nib forCellReuseIdentifier:@"CustomCell"];
 }
 
 #pragma mark - Task Management
@@ -75,6 +150,10 @@
     NSArray *objects = [context executeFetchRequest:request
                                               error:&error];
     
+    //First Clear Arrays
+    [self.oldTasks removeAllObjects];
+    [self.futureTasks removeAllObjects];
+    
     // Iterate through array, and seperate into old and future tasks
     for (NSManagedObject *object in objects) {
         Task *task = (Task *)object;
@@ -86,7 +165,9 @@
             [self.futureTasks addObject:task];
         }
     }
+    [self.tableView reloadData];
 }
+
 - (void)saveTaskWithName:(NSString *)name andDuration:(NSNumber *)duration {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     
@@ -138,35 +219,57 @@
     [context save:&error];
 }
 
-#pragma mark - Transition
-
 #pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    // TODO: Remove sample data
+    //return taskHours.count;
+    if (section == 0) {
+        return [self.oldTasks count];
+    }
+    else {
+        return [self.futureTasks count];
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Initialize custom cell
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    TaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomCell"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        cell = [[TaskCell alloc] init];
+    }
+    Task *task;
+    if (indexPath.section == 0) {
+        task = [self.oldTasks objectAtIndex:indexPath.row];
+    }
+    else {
+        task = [self.futureTasks objectAtIndex:indexPath.row];
+    }
+    cell.task = task;
+    cell.nameLabel.text = task.name;
+        
+    if (indexPath.row == self.selectedTaskIndex) {
+        [self selectCell:cell];
+    } else {
+        [self deselectCell:cell];
     }
     
-    cell.textLabel.text = @"Name";
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 #pragma mark - Table View Section
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 30;
+    return section == 0 ? [self.oldTasks count] : [self.futureTasks count];
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Tasks";
+    
+    return section == 0 ? @"Old Tasks" : @"New Tasks";
+
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
@@ -187,6 +290,66 @@
     [view addSubview:label];
     
     return view;
+}
+
+#pragma mark - Table View Selection
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // Swap Top Info
+    // TODO: Remove sample data
+    self.taskName.text = taskNames[indexPath.row];
+    // TODO: Change timestamp
+    
+    // Deselect previously selected cell
+    [self deselectCell:self.selectedTaskCell];
+    
+    // Select new cell
+    if (self.selectedTaskIndex != indexPath.row) {
+        
+        self.selectedTaskCell = (TaskCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [self selectCell:self.selectedTaskCell];
+        
+        // Set new selection index
+        self.selectedTaskIndex = indexPath.row;
+    } else {
+        self.selectedTaskIndex = -1;
+    }
+    
+}
+- (void)selectCell:(TaskCell *)cell {
+    
+    cell.nameLabel.textColor = selectedTextColor;
+    cell.timestampLabel.textColor = selectedTextColor;
+    cell.checkbox.image = [UIImage imageNamed:@"checked.png"];
+    cell.clockIcon.image = [UIImage imageNamed:@"clock-highlighted.png"];
+}
+- (void)deselectCell:(TaskCell *)cell {
+    
+    cell.nameLabel.textColor = [UIColor blackColor];
+    cell.timestampLabel.textColor = [UIColor blackColor];
+    cell.checkbox.image = [UIImage imageNamed:@"unchecked.png"];
+    cell.clockIcon.image = [UIImage imageNamed:@"clock.png"];
+}
+
+#pragma mark - Bar Button Interaction
+
+- (void)addButtonPressed {
+    AddTaskViewController *vc = [[AddTaskViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+- (void)editButtonPressed {
+    self.navigationItem.leftBarButtonItem = self.cancelButton;
+    self.navigationItem.rightBarButtonItem = self.doneButton;
+}
+- (void)cancelButtonPressed {
+    self.navigationItem.leftBarButtonItem = self.editButton;
+    self.navigationItem.rightBarButtonItem = self.addButton;
+}
+- (void)doneButtonPressed {
+    self.navigationItem.leftBarButtonItem = self.editButton;
+    self.navigationItem.rightBarButtonItem = self.addButton;
 }
 
 #pragma mark - Table View Editing
@@ -218,6 +381,22 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     // Override to support conditional rearranging of the table view.
     // Return NO if you do not want the item to be re-orderable.
     return YES;
+}
+
+#pragma mark - Actions
+
+- (IBAction)clickedPlayButton:(UIButton *)button {
+    
+    if (button.tag == kSTATE_PLAY) {
+        // Switch to Pause
+        [button setBackgroundImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+        button.tag = kSTATE_PAUSE;
+    }
+    else if (button.tag == kSTATE_PAUSE) {
+        // Switch to Play
+        [button setBackgroundImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
+        button.tag = kSTATE_PLAY;
+    }
 }
 
 @end

@@ -61,6 +61,7 @@
             [self.futureTasks addObject:task];
         }
     }
+    [self.tableView reloadData];
 }
 - (void)saveTaskWithName:(NSString *)name andDuration:(NSNumber *)duration {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -95,6 +96,7 @@
     NSError *error;
     [context save:&error];
   
+    [self loadData];
 }
 - (void)finishTask:(Task *)task {
     AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -106,11 +108,11 @@
     
     [futureTask setValue:[NSNumber numberWithBool:YES] forKey:@"completed"];
     
-    
-    
     //Save
     NSError *error;
     [context save:&error];
+    
+    [self loadData];
 }
 
 #pragma mark - Transition
@@ -121,6 +123,19 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    switch (section) {
+        case 0:
+            return [self.oldTasks count];
+            break;
+        case 1:
+            //return 5;
+            return [self.futureTasks count];
+            break;
+            
+        default:
+            break;
+    }
     return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

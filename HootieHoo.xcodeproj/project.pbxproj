@@ -10,10 +10,12 @@
 		0986B09B19F0CD190060E159 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B09A19F0CD190060E159 /* main.m */; };
 		0986B09E19F0CD190060E159 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B09D19F0CD190060E159 /* AppDelegate.m */; };
 		0986B0A119F0CD190060E159 /* HootieHoo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0986B09F19F0CD190060E159 /* HootieHoo.xcdatamodeld */; };
-		0986B0A419F0CD190060E159 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B0A319F0CD190060E159 /* ViewController.m */; };
 		0986B0A919F0CD190060E159 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0986B0A819F0CD190060E159 /* Images.xcassets */; };
 		0986B0AC19F0CD190060E159 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0986B0AA19F0CD190060E159 /* LaunchScreen.xib */; };
 		0986B0B819F0CD190060E159 /* HootieHooTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0986B0B719F0CD190060E159 /* HootieHooTests.m */; };
+		FA29CC431A09B58400A7AB30 /* TaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA29CC411A09B58400A7AB30 /* TaskCell.m */; };
+		FA29CC441A09B58400A7AB30 /* TaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA29CC421A09B58400A7AB30 /* TaskCell.xib */; };
+		FA29CC461A09FCBC00A7AB30 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA29CC451A09FCBC00A7AB30 /* QuartzCore.framework */; };
 		FA50ADD31A06BBA700196A1F /* Date.m in Sources */ = {isa = PBXBuildFile; fileRef = FA50ADD21A06BBA700196A1F /* Date.m */; };
 		FA50ADD61A06C2F100196A1F /* playsir-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FA50ADD51A06C2F100196A1F /* playsir-regular.otf */; };
 		FAD7D22119F18A7E00E662B7 /* AddTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD7D21C19F18A7E00E662B7 /* AddTaskViewController.m */; };
@@ -40,13 +42,15 @@
 		0986B09C19F0CD190060E159 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0986B09D19F0CD190060E159 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		0986B0A019F0CD190060E159 /* HootieHoo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HootieHoo.xcdatamodel; sourceTree = "<group>"; };
-		0986B0A219F0CD190060E159 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0986B0A319F0CD190060E159 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0986B0A819F0CD190060E159 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0986B0AB19F0CD190060E159 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0986B0B119F0CD190060E159 /* HootieHooTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HootieHooTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0986B0B619F0CD190060E159 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0986B0B719F0CD190060E159 /* HootieHooTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HootieHooTests.m; sourceTree = "<group>"; };
+		FA29CC401A09B58400A7AB30 /* TaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TaskCell.h; path = TaskCell/TaskCell.h; sourceTree = "<group>"; };
+		FA29CC411A09B58400A7AB30 /* TaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TaskCell.m; path = TaskCell/TaskCell.m; sourceTree = "<group>"; };
+		FA29CC421A09B58400A7AB30 /* TaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TaskCell.xib; path = TaskCell/TaskCell.xib; sourceTree = "<group>"; };
+		FA29CC451A09FCBC00A7AB30 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FA50ADD11A06BBA700196A1F /* Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Date.h; sourceTree = "<group>"; };
 		FA50ADD21A06BBA700196A1F /* Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Date.m; sourceTree = "<group>"; };
 		FA50ADD51A06C2F100196A1F /* playsir-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "playsir-regular.otf"; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA29CC461A09FCBC00A7AB30 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,8 +106,6 @@
 			children = (
 				0986B09C19F0CD190060E159 /* AppDelegate.h */,
 				0986B09D19F0CD190060E159 /* AppDelegate.m */,
-				0986B0A219F0CD190060E159 /* ViewController.h */,
-				0986B0A319F0CD190060E159 /* ViewController.m */,
 				FAF6C1D919F1819800EE2697 /* src */,
 				0986B0A819F0CD190060E159 /* Images.xcassets */,
 				0986B0AA19F0CD190060E159 /* LaunchScreen.xib */,
@@ -115,7 +118,8 @@
 		0986B09819F0CD190060E159 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FA50ADD41A06C2E200196A1F /* fonts */,
+				FA29CC471A09FCC600A7AB30 /* Frameworks */,
+				FA50ADD41A06C2E200196A1F /* Fonts */,
 				0986B09919F0CD190060E159 /* Info.plist */,
 				0986B09A19F0CD190060E159 /* main.m */,
 			);
@@ -139,12 +143,30 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FA50ADD41A06C2E200196A1F /* fonts */ = {
+		FA29CC3F1A09B55E00A7AB30 /* TaskCell */ = {
+			isa = PBXGroup;
+			children = (
+				FA29CC401A09B58400A7AB30 /* TaskCell.h */,
+				FA29CC411A09B58400A7AB30 /* TaskCell.m */,
+				FA29CC421A09B58400A7AB30 /* TaskCell.xib */,
+			);
+			name = TaskCell;
+			sourceTree = "<group>";
+		};
+		FA29CC471A09FCC600A7AB30 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA29CC451A09FCBC00A7AB30 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA50ADD41A06C2E200196A1F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				FA50ADD51A06C2F100196A1F /* playsir-regular.otf */,
 			);
-			name = fonts;
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		FAD7D21919F18A7E00E662B7 /* Home */ = {
@@ -153,6 +175,7 @@
 				FAD7D21E19F18A7E00E662B7 /* HomeViewController.h */,
 				FAD7D21F19F18A7E00E662B7 /* HomeViewController.m */,
 				FAD7D22019F18A7E00E662B7 /* HomeViewController.xib */,
+				FA29CC3F1A09B55E00A7AB30 /* TaskCell */,
 				FAD7D21A19F18A7E00E662B7 /* AddTask */,
 			);
 			path = Home;
@@ -272,6 +295,7 @@
 				FAD7D22219F18A7E00E662B7 /* AddTaskViewController.xib in Resources */,
 				FA50ADD61A06C2F100196A1F /* playsir-regular.otf in Resources */,
 				0986B0A919F0CD190060E159 /* Images.xcassets in Resources */,
+				FA29CC441A09B58400A7AB30 /* TaskCell.xib in Resources */,
 				FAD7D22419F18A7E00E662B7 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,9 +317,9 @@
 				0986B09E19F0CD190060E159 /* AppDelegate.m in Sources */,
 				FAD7D22119F18A7E00E662B7 /* AddTaskViewController.m in Sources */,
 				0986B09B19F0CD190060E159 /* main.m in Sources */,
-				0986B0A419F0CD190060E159 /* ViewController.m in Sources */,
 				FAF6C1E319F1819800EE2697 /* Task.m in Sources */,
 				FAD7D22319F18A7E00E662B7 /* HomeViewController.m in Sources */,
+				FA29CC431A09B58400A7AB30 /* TaskCell.m in Sources */,
 				0986B0A119F0CD190060E159 /* HootieHoo.xcdatamodeld in Sources */,
 				FA50ADD31A06BBA700196A1F /* Date.m in Sources */,
 			);
